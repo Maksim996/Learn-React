@@ -3,8 +3,17 @@ import TodoItem from './TodoItem';
 import PropTypes from "prop-types";
 
 function TodoList(props) {
+
+  const styles = {
+    ul: {
+      listStyleType: 'none',
+      margin: 0,
+      padding: 0,
+    }
+  }
+
   return (
-    <ul>
+    <ul style={styles.ul}>
       {props.obj.map((obj, index) => {
         return <TodoItem props={obj} key={index} index={index}/>
       })}
