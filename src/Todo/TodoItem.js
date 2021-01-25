@@ -1,6 +1,7 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import PropTypes from 'prop-types';
-// import className from 'cla';
+import className from 'classnames';
+import Context from "../context";
 
 function TodoItem({ props, index, onChange }) {
   const styles = {
@@ -22,15 +23,17 @@ function TodoItem({ props, index, onChange }) {
     }
   }
 
-  const classes = [];
+  const {removeItem} = useContext(Context);
+  const classes = className( { done: props.completed});
 
-  if (props.completed) {
-    classes.push('done');
-  }
+  // if (props.completed) {
+  //   classes.push('done');
+  // }
+
 
   return (
     <li style={styles.li}>
-      <span style={styles.span} className={classes.join(' ')}>
+      <span style={styles.span} className={classes}>
         <input type="checkbox"
                style={styles.checkbox}
                checked={props.completed}
@@ -39,7 +42,7 @@ function TodoItem({ props, index, onChange }) {
         <strong>{++index}&nbsp;</strong>
         {props.name}
       </span>
-      <button type="button" className='rm'>&times;</button>
+      <button type="button" className='rm' onClick={removeItem.bind(null,props.id)}>&times;</button>
     </li>
   )
 }
