@@ -26,11 +26,6 @@ function TodoItem({ props, index, onChange }) {
   const {removeItem} = useContext(Context);
   const classes = className( { done: props.completed});
 
-  // if (props.completed) {
-  //   classes.push('done');
-  // }
-
-
   return (
     <li style={styles.li}>
       <span style={styles.span} className={classes}>
@@ -40,7 +35,7 @@ function TodoItem({ props, index, onChange }) {
                onChange={() => onChange(props.id)}
         />
         <strong>{++index}&nbsp;</strong>
-        {props.name}
+        {props.title}
       </span>
       <button type="button" className='rm' onClick={removeItem.bind(null,props.id)}>&times;</button>
     </li>
