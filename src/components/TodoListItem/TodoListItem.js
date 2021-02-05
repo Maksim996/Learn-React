@@ -16,7 +16,7 @@ export default class TodoListItem extends Component {
  };
 
  render() {
-   const {label} = this.props;
+   const {label, onDeleted} = this.props;
    const {done, important} = this.state;
    const classLabel = [important ? 'text-danger' :'text-primary'];
 
@@ -26,7 +26,7 @@ export default class TodoListItem extends Component {
      <div className="todo-list-item">
        <span className={classLabel.join(' ')} onClick={this.onLabelClick}>{ label }</span>
        <div className="d-flex align-items-center" role="group" aria-label="Basic example">
-         <button type="button" className="btn btn-outline-danger">
+         <button type="button" className="btn btn-outline-danger" onClick={onDeleted}>
            <i className="fa fa-trash"></i>
          </button>
          <button type="button"
