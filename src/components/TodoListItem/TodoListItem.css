@@ -3,7 +3,14 @@
     align-items: center;
     justify-content: space-between;
 }
+.todo-list-item span {
+    cursor: pointer;
+}
 .todo-list-item button {
     min-width: 50px;
     margin: 0 5px;
+}
+.todo-list-item .done {
+    text-decoration: line-through;
+    font-weight: bold;
 }
