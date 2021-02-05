@@ -2,7 +2,7 @@ import React from 'react';
 import TodoListItem from '../TodoListItem/TodoListItem';
 import './TodoList.css'
 
-const TodoList = ({ items, onDeleted }) => {
+const TodoList = ({ items, onDeleted, toggleImportant, toggleDone }) => {
 
   return (
     <ul className="list-group todo-list">
@@ -14,7 +14,11 @@ const TodoList = ({ items, onDeleted }) => {
               className="list-group-item"
           >
             {/*<TodoListItem label={item.label} important={item.important}/>*/}
-            <TodoListItem { ...itemProps } onDeleted={ () => onDeleted(id) }/>
+            <TodoListItem { ...itemProps }
+                          onDeleted={ () => onDeleted(id) }
+                          toggleImportant={ () => toggleImportant(id) }
+                          toggleDone={ () => toggleDone(id) }
+            />
           </li>
         );
       })}

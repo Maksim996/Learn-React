@@ -1,42 +1,26 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './TodoListItem.css'
 
-export default class TodoListItem extends Component {
- state = {
-   done: false,
-   important: this.props.important
-  };
-
- onLabelClick = () => {
-    this.setState(({ done })=>{ return { done: !done }});
- };
-
- onImportantClick = () => {
-   this.setState(({important}) => {return { important: !important }})
- };
-
- render() {
-   const {label, onDeleted} = this.props;
-   const {done, important} = this.state;
-   const classLabel = [important ? 'text-danger' :'text-primary'];
-
-   if (done) classLabel.push('done');
+export default function TodoListItem({label, important, done, onDeleted, toggleDone, toggleImportant}) {
+   const classLabel = [
+     important ? 'text-danger' : 'text-primary',
+     done ? 'done' : ''
+   ];
 
    return (
      <div className="todo-list-item">
-       <span className={classLabel.join(' ')} onClick={this.onLabelClick}>{ label }</span>
+       <span className={classLabel.join(' ')} onClick={toggleDone}>{ label }</span>
        <div className="d-flex align-items-center" role="group" aria-label="Basic example">
          <button type="button" className="btn btn-outline-danger" onClick={onDeleted}>
            <i className="fa fa-trash"></i>
          </button>
          <button type="button"
-                 className={`btn btn-outline-success ${important ? "active" : ""}`}
-                 onClick={this.onImportantClick}
+                 className={`btn btn-outline-success ${ important ? "active" : ""}`}
+                 onClick={toggleImportant}
          >
            <i className="fa fa-exclamation"></i>
          </button>
        </div>
      </div>
    );
- }
-}
+ };
