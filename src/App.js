@@ -1,9 +1,9 @@
 import React from 'react';
-import AppHeader from './components/AppHeader';
-import TodoList from './components/TodoList';
-import Search from './components/Search';
-import TodoStatusFilter from './components/TodoStatusFilter';
-import AddTodos from './components/AddTodos';
+import AppHeader from './components/AppHeader/AppHeader';
+import TodoList from './components/TodoList/TodoList';
+import Search from './components/Search/Search';
+import TodoStatusFilter from './components/TodoStatusFilter/TodoStatusFilter';
+import AddTodos from './components/AddTodos/AddTodos';
 
 const App = () => {
 
