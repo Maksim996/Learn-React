@@ -12,6 +12,7 @@ export default class App extends Component {
       { label: 'Build react app', important: true, done: false, id: 2 },
       { label: 'Some work', important: false, done: false, id: 3 },
     ],
+    searchTodoData: [],
     toDo: null,
     done: null,
   };
@@ -49,7 +50,6 @@ export default class App extends Component {
       }
     });
   };
-
   onToggleDone = (id) => {
     this.setState(({ todoData }) => {
       return {
@@ -57,9 +57,28 @@ export default class App extends Component {
       }
     });
   };
+  onChangeSearch = (search) => {
+    if (search) {
+      const items = this.state.todoData.filter(el => el.label.toUpperCase().search(search.toUpperCase()) !== -1)
+      this.setState(({ todoData }) => {
+        return {
+          searchTodoData: items.length ? items : []
+        }
+      });
+    } else {
+      this.setState(() => {
+        return {
+          searchTodoData: []
+        }
+      });
+    }
+  };
+  onChangeFilter = (value) => {
+    console.log(value)
+  };
 
   render() {
-    const { todoData } = this.state;
+    const { todoData, searchTodoData } = this.state;
     const doneCount = todoData.filter(el => el.done).length;
     const toDoCount = todoData.length - doneCount;
 
@@ -67,10 +86,10 @@ export default class App extends Component {
       <div className="container">
         <AppHeader toDo={toDoCount} done={doneCount} />
         <div className="row mb-4">
-          <Search/>
-          <TodoStatusFilter/>
+          <Search onChangeSearch={this.onChangeSearch}/>
+          <TodoStatusFilter onChangeFilter={this.onChangeFilter}/>
         </div>
-        <TodoList items={todoData}
+        <TodoList items={searchTodoData.length ? searchTodoData : todoData}
                   onDeleted={this.onDeletedItem}
                   onToggleImportant={this.onToggleImportant}
                   onToggleDone={this.onToggleDone}
