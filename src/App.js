@@ -24,7 +24,6 @@ export default class App extends Component {
     })
   };
   addTodoItem = (label) => {
-    console.log('yeees')
     this.setState( ({todoData}) => {
       return {
         todoData: [...todoData, {
