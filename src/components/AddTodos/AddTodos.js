@@ -1,23 +1,33 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const AddTodos = ({addTodoItem}) => {
-
-  function addItem() {
-    const input = document.getElementById('add-todo-item')
-    addTodoItem(input.value);
-    input.value = '';
+export default class AddTodos extends Component {
+  state = {
+    label : '',
   };
+  onChange = (e) => {
+   this.setState(({label}) =>  {
+     return {
+      label: e.target.value
+     }
+   })
+  };
+  onSubmit = (e) => {
+    e.preventDefault();
+    this.props.addTodoItem(this.state.label);
+    this.setState({label: ''} );
+  };
+  render() {
+    return (
+      <form className="input-group mt-3" onSubmit={ this.onSubmit }>
+        <input id="add-todo-item" type="text" className="form-control" onChange={this.onChange} value={this.state.label}/>
+        <div className="input-group-append">
+          <button className="btn btn-outline-secondary"
+                  type="submit"
+          >Add</button>
+        </div>
+      </form>
+    )
+  }
+};
 
-  return (
-    <div className="input-group mt-3">
-      <input id="add-todo-item" type="text" className="form-control"/>
-      <div className="input-group-append">
-        <button className="btn btn-outline-secondary"
-                type="button"
-                onClick={ addItem }
-        >Add</button>
-      </div>
-    </div>
-)};
-
-export default AddTodos
+// export default AddTodos
