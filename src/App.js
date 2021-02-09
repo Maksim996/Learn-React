@@ -33,7 +33,7 @@ export default class App extends Component {
     })
   };
 
-  toggleImportant = (id) => {
+  onToggleImportant = (id) => {
     const arr = this.state.todoData;
     const idx = arr.findIndex(el => el.id === id);
     const newArray = [
@@ -44,7 +44,7 @@ export default class App extends Component {
     this.setState(({ todoData }) => { return { todoData: newArray } });
   };
 
-  toggleDone = (id) => {
+  onToggleDone = (id) => {
     const arr = this.state.todoData;
     const idx = arr.findIndex(el => el.id === id);
     const newArray = [
@@ -58,15 +58,15 @@ export default class App extends Component {
   render() {
     return (
       <div className="container">
-        <AppHeader />
+        <AppHeader toDo={1} done={3} />
         <div className="row mb-4">
           <Search/>
           <TodoStatusFilter/>
         </div>
         <TodoList items={this.state.todoData}
                   onDeleted={this.onDeletedItem}
-                  toggleImportant={this.toggleImportant}
-                  toggleDone={this.toggleDone}
+                  onToggleImportant={this.onToggleImportant}
+                  onToggleDone={this.onToggleDone}
         />
         <AddTodos addTodoItem={this.addTodoItem} />
       </div>
