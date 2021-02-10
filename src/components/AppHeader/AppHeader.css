@@ -1,9 +1,0 @@
-.app-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-.app-header span {
-    font-size: 20px;
-    color: #cccccc;
-}
