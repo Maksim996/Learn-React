@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import Header from '../header/Header'
-import ApiSwapi from '../../services/ApiSwapi'
 import RandomPlanets from "../random-planets/RandomPlanets";
 import ListItems from "../list-items/ListItems";
 import DescriptionItem from "../description-item/DescriptionItem";

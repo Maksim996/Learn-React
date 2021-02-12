@@ -1,20 +1,96 @@
-import React from 'react'
+// import React, {useState, useEffect} from 'react'
+// import ApiSwapi from "../../services/ApiSwapi";
+//
+// const RandomPlanets = () => {
+//   const apiSwapi = new ApiSwapi();
+//   const [planet, setPlanet] = useState({name: null, diameter: null, population: null, rotationPeriod: null});
+//   const [planets, setPlanets] = useState([]);
+//
+//   function getAllPlanet () {
+//     apiSwapi.getAllPlanets().then((data) => {
+//
+//       setPlanets(data);
+//     })
+//   }
+//   function randomPlanet() {
+//     const id = Math.floor(Math.random() * Math.floor(planets.length || 10))
+//     const planet = planets[id];
+//     setPlanet({
+//       name: planet.name,
+//       diameter: planet.diameter,
+//       population: planet.population,
+//       rotationPeriod: planet.rotation_period
+//     });
+//     console.log('sss')
+//   }
+//   useEffect(() => {
+//     getAllPlanet();
+//   },[]);
+//   useEffect(() => {
+//     const interval = setInterval( () => {if(planets.length) randomPlanet();}, 3600)
+//     return () => { interval.clearInterval()}
+//   },[]);
+//
+//   return (
+//     <div className="media mt-5">
+//       <img src="https://images.unsplash.com/photo-1481819613568-3701cbc70156?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
+//            className="align-self-start mr-3 w-25" alt="..."/>
+//       <div className="media-body">
+//         <h5 className="mt-0">{planet.name}</h5>
+//         <p><span>Diameter: </span><span className={'text-success'}>{planet.diameter}</span></p>
+//         <p><span>Population: </span><span className={'text-success'}>{planet.population}</span></p>
+//         <p><span>Rotation Period: </span><span className={'text-success'}>{planet.rotationPeriod}</span></p>
+//       </div>
+//     </div>
+//   )
+// };
+//
+// export default RandomPlanets
 
-const RandomPlanets = () => {
-  return (
-    <div className="media mt-5">
-      <img src="..." className="align-self-start mr-3" alt="..."/>
+import React, { Component } from 'react';
+import ApiSwapi from "../../services/ApiSwapi";
+
+const apiSwapi = new ApiSwapi();
+
+export default class RandomPlanets extends Component {
+  constructor() {
+    super();
+    this.updatePlanet();
+  }
+
+  state = {
+    id: null,
+    name: null,
+    diameter: null,
+    population: null,
+    rotationPeriod: null,
+  };
+  updatePlanet = () => {
+    const id = Math.floor(Math.random() * 25) + 2;
+    apiSwapi.getPlanet(id).then((data) => {
+      this.setState({
+          id,
+          name: data.name,
+          diameter: data.diameter,
+          population: data.population,
+          rotationPeriod: data.rotation_period,
+        })
+    })
+  };
+
+  render() {
+    const {id ,name, diameter, population, rotationPeriod} = this.state;
+    return (
+      <div className="media mt-5">
+        <img src={`https://starwars-visualguide.com/assets/img/planets/${id}.jpg`}
+             className="align-self-start mr-3 w-25" alt="..."/>
         <div className="media-body">
-          <h5 className="mt-0">Top-aligned media</h5>
-          <p>I’m gon’ put her in a coma. You give a hundred reasons why, and you say you're really gonna try. So I sat
-            quietly, agreed politely. Suiting up for my crowning battle. And on my 18th Birthday we got matching
-            tattoos. So très chic, yeah, she's a classic. I am ready for the road less traveled.</p>
-          <p>I'm walking on air (tonight). But down to earth. You're original, cannot be replaced. But in another life I
-            would be your girl. We drove to Cali and got drunk on the beach. We can dance, until we die, you and I, will
-            be young forever. Saw you downtown singing the Blues.</p>
+          <h5 className="mt-0">{name}</h5>
+          <p><span>Diameter: </span><span className={'text-success'}>{diameter}</span></p>
+          <p><span>Population: </span><span className={'text-success'}>{population}</span></p>
+          <p><span>Rotation Period: </span><span className={'text-success'}>{rotationPeriod}</span></p>
         </div>
-    </div>
-  )
-};
-
-export default RandomPlanets
+      </div>
+    )
+  }
+}
