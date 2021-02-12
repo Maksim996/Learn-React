@@ -49,6 +49,8 @@
 
 import React, { Component } from 'react';
 import ApiSwapi from "../../services/ApiSwapi";
+import Spinner from "../spinner/Spinner";
+import Planet from './Planet'
 
 const apiSwapi = new ApiSwapi();
 
@@ -59,37 +61,40 @@ export default class RandomPlanets extends Component {
   }
 
   state = {
-    id: null,
-    name: null,
-    diameter: null,
-    population: null,
-    rotationPeriod: null,
+    loader: true,
+    planet: {
+      id: null,
+      name: null,
+      diameter: null,
+      population: null,
+      rotationPeriod: null,
+    }
   };
   updatePlanet = () => {
     const id = Math.floor(Math.random() * 25) + 2;
     apiSwapi.getPlanet(id).then((data) => {
       this.setState({
-          id,
-          name: data.name,
-          diameter: data.diameter,
-          population: data.population,
-          rotationPeriod: data.rotation_period,
+          planet: {
+            id,
+            name: data.name,
+            diameter: data.diameter,
+            population: data.population,
+            rotationPeriod: data.rotation_period,
+          },
+          loader: false
         })
     })
   };
 
   render() {
-    const {id ,name, diameter, population, rotationPeriod} = this.state;
+    const {planet, loader} = this.state;
+    const spinner = loader ? <Spinner/> : null;
+    const content = !loader ? <Planet planet={planet}/> : null
+
     return (
       <div className="media mt-5">
-        <img src={`https://starwars-visualguide.com/assets/img/planets/${id}.jpg`}
-             className="align-self-start mr-3 w-25" alt="..."/>
-        <div className="media-body">
-          <h5 className="mt-0">{name}</h5>
-          <p><span>Diameter: </span><span className={'text-success'}>{diameter}</span></p>
-          <p><span>Population: </span><span className={'text-success'}>{population}</span></p>
-          <p><span>Rotation Period: </span><span className={'text-success'}>{rotationPeriod}</span></p>
-        </div>
+        { spinner }
+        { content }
       </div>
     )
   }
