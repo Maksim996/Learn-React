@@ -51,6 +51,7 @@ import React, { Component } from 'react';
 import ApiSwapi from "../../services/ApiSwapi";
 import Spinner from "../spinner/Spinner";
 import Planet from './Planet'
+import ErrorMassages from "../error-messages/ErrorMessages";
 
 const apiSwapi = new ApiSwapi();
 
@@ -62,6 +63,7 @@ export default class RandomPlanets extends Component {
 
   state = {
     loader: true,
+    error: false,
     planet: {
       id: null,
       name: null,
@@ -69,6 +71,9 @@ export default class RandomPlanets extends Component {
       population: null,
       rotationPeriod: null,
     }
+  };
+  onError = (err) => {
+    this.setState({error: true, loader: false});
   };
   updatePlanet = () => {
     const id = Math.floor(Math.random() * 25) + 2;
@@ -81,18 +86,21 @@ export default class RandomPlanets extends Component {
             population: data.population,
             rotationPeriod: data.rotation_period,
           },
-          loader: false
+          loader: false,
+          error: false
         })
-    })
+    }).catch(this.onError)
   };
 
   render() {
-    const {planet, loader} = this.state;
+    const { planet, loader, error } = this.state;
     const spinner = loader ? <Spinner/> : null;
-    const content = !loader ? <Planet planet={planet}/> : null
+    const errorMessage = error ? <ErrorMassages/> : null;
+    const content = !(loader || errorMessage) ? <Planet planet={ planet }/> : null
 
     return (
       <div className="media mt-5">
+        {errorMessage}
         { spinner }
         { content }
       </div>
