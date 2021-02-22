@@ -56,11 +56,6 @@ import ErrorMassages from "../error-messages/ErrorMessages";
 const apiSwapi = new ApiSwapi();
 
 export default class RandomPlanets extends Component {
-  constructor() {
-    super();
-    this.updatePlanet();
-  }
-
   state = {
     loader: true,
     error: false,
@@ -72,11 +67,17 @@ export default class RandomPlanets extends Component {
       rotationPeriod: null,
     }
   };
+
+  componentDidMount() {
+    this.updatePlanet();
+    // setInterval(this.updatePlanet, 1500)
+  }
+
   onError = (err) => {
     this.setState({error: true, loader: false});
   };
   updatePlanet = () => {
-    const id = 2222//Math.floor(Math.random() * 25) + 2;
+    const id = Math.floor(Math.random() * 25) + 2;
     apiSwapi.getPlanet(id).then((data) => {
       this.setState({
           planet: {
@@ -96,7 +97,7 @@ export default class RandomPlanets extends Component {
     const { planet, loader, error } = this.state;
     const spinner = loader ? <Spinner/> : null;
     const errorMessage = error ? <ErrorMassages/> : null;
-    const content = !(loader || errorMessage) ? <Planet planet={ planet }/> : null
+    const content = !(loader || errorMessage) ? <Planet planet={ planet }/> : null;
 
     return (
       <div className="media mt-5">

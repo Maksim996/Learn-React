@@ -6,6 +6,13 @@ import DescriptionItem from "../description-item/DescriptionItem";
 
 
 export default class App extends Component {
+  state = {
+    selectedPerson: null
+  };
+  onSelectedPerson = (name) => {
+    console.log(name);
+    this.setState({selectedPerson: name})
+  };
   render() {
     return (
       <div className={'container'}>
@@ -13,10 +20,10 @@ export default class App extends Component {
         <RandomPlanets/>
         <div className={'row'}>
           <div className={'col-lg-6 col-md-12'}>
-            <ListItems/>
+            <ListItems onSelectedPerson={this.onSelectedPerson}/>
           </div>
           <div className={'col-lg-6 col-md-12'}>
-            <DescriptionItem/>
+            <DescriptionItem selectedPerson={this.state.selectedPerson}/>
           </div>
         </div>
       </div>
